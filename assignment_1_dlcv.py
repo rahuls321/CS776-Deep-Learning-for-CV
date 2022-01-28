@@ -234,7 +234,7 @@ def get_augmented_images(data):
         augmented_img.append(img2)
     return np.array(augmented_img)
 
-augmented_img = get_augmented_images(org_train_images[:1000])
+augmented_img = get_augmented_images(org_train_images)
 print(augmented_img.shape)
 
 plt.figure(figsize= (15,15))
@@ -276,10 +276,10 @@ def get_feat_vec(images, obj):
 
 obj = BBResNet18()
 augmented_feat_vec=get_feat_vec(augmented_img[:1000], obj)
-original_feat_vec=get_feat_vec(org_train_images[:1000], obj)
+original_feat_vec=get_feat_vec(org_train_images, obj)
 print("Augmented Training Image Vector shape: ", augmented_feat_vec.shape)
 print("Original Training Image Vector shape: ", original_feat_vec.shape)
 
 
 """## Question 5"""
-Model(original_feat_vec, train_data['labels'][:1000], np.arange(10))
+Model(original_feat_vec, train_data['labels'], np.arange(10))
