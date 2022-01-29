@@ -11,13 +11,14 @@ def softmax(x):
     '''
         softmax(x) = exp(x) / sum(exp(x))
     '''
-    # print("softmax: ", x)
-    
+    print("softmax: ", x)
+    # exit()
+    # x = x.flatten()
     exp_values = np.exp(x - np.max(x))
     prob = exp_values / np.sum(exp_values)
     # predict_class = np.argmax(prob, axis=1)
-    # prob = prob.reshape(-1, 10, 1)
-    # print("prob: ", prob)
+    prob = prob.reshape(-1, 10, 1)
+    print("prob: ", prob)
     # exit()
     return prob
 
@@ -42,7 +43,7 @@ def get_one_hot_vector(y):
 
 class MLP(object):
     def __init__(self, input_size):
-        self.weights = [0.1*np.random.randn(y, x) for x, y in zip(input_size[:-1], input_size[1:])]
+        self.weights = [0.01*np.random.randn(y, x) for x, y in zip(input_size[:-1], input_size[1:])]
         self.biases = [np.zeros((x, 1)) for x in input_size[1:]]
         print("Weights shape1: ", self.weights[0].shape)
         print("Weights shape2: ", self.weights[1].shape)
@@ -54,13 +55,13 @@ class MLP(object):
         # print("X shape: ", x.shape)
         # exit()
         z1 = np.dot(self.weights[0], x) + self.biases[0]
-        # print("z1 shape: ", z1.shape)
+        # print("z1 shape: ", z1)
         a1 = relu(z1)
-        # print("a1 shape: ", a1.shape)
+        # print("a1 shape: ", a1)
         z2 = np.dot(self.weights[1], a1) + self.biases[1]
-        # print("z2 shape: ", z2.shape)
+        # print("z2 shape: ", z2)
         a2 = softmax(z2)
-        # print("a2 shape: ", a2.shape)
+        # print("a2 shape: ", a2)
         return z1, a1, z2, a2
 
     def backpropogation(self, X, y):
@@ -79,11 +80,12 @@ class MLP(object):
         # print("a2: ", a2.shape)
         # print("y: ", y.shape)
         # print("error: ", error.shape)
+        # exit()
         # print("a1: ", a1.shape)
 
         #derivative of softmax = predicted_output - actual_output
         #For Hidden Layer
-        delta1 = error[0]
+        delta1 = error
         delta_b[1] = delta1 # np.sum(delta1, axis=0, keepdims=True)
         delta_w[1] = np.dot(delta1, a1.T)
         # print("delta_b[1].shape: ", delta_b[1].shape)
@@ -114,7 +116,10 @@ class MLP(object):
         #Here y is single value and x is same as input
         count = 0
         # print("x: ", X[0])
-        # print("x: ", X[0].shape)
+        # # print("x: ", X[0].shape)
+
+        # print("self.weights[0]: ", self.weights[0])
+        # print("self.biases[0]: ", self.biases[0])
         # exit()
         for x, _y in zip(X, y):
             # postion of maximum value is the predicted label
@@ -122,10 +127,10 @@ class MLP(object):
             # print("pred: ", p)
             # print("y: ", np.argmax(_y))
             # print("y: ", _y.flatten())
-            print("y: ", np.argmax(_y))
+            # print("y: ", np.argmax(_y))
             _, _ , _,output = self.feedforward(np.array([x]).T)
-            print("output: ",  output.flatten())
-            print("output: ",  np.argmax(output))
+            # print("output: ",  output.flatten())
+            # print("output: ",  np.argmax(output))
             # exit()
             if np.argmax(output) == np.argmax(_y):
                 count += 1
@@ -161,11 +166,11 @@ class MLP(object):
                 del_w = [np.zeros(w.shape) for w in self.weights]
 
                 for bx, by in zip(batch_x, batch_y):
-                    loss, delta_b, delta_w = self.backpropogation(np.array([bx]).T, np.array([by]).T)
+                    loss, delta_b, delta_w = self.backpropogation(np.array([bx]).T, by)
                     losses+=loss
                     del_b = [db + ddb for db, ddb in zip(del_b, delta_b)]
                     del_w = [dw + ddw for dw, ddw in zip(del_w, delta_w)]
-
+                exit()
             self.weights = [w - (learning_rate/batch_size)*dw for w, dw in zip(self.weights, del_w)]
             self.biases = [b - (learning_rate/batch_size)*db for b, db in zip(self.biases, del_b)]
 
@@ -173,7 +178,7 @@ class MLP(object):
             # Training data
             # _, _ , _,output = self.feedforward(X)
             train_acc = self.evaluate(X, y)
-            exit()
+            # exit()
             # train_loss=0.0
             # for out, _y in zip(output, y):
             #     train_loss += cross_entropy_loss(out, _y)
@@ -199,7 +204,7 @@ def Model(X_train, y_train):
     num_hidden=64
     num_output=10
     epochs=20
-    batch_size=100
+    batch_size=16
     learning_rate=0.01
     # y_train = get_one_hot_vector(y_train)
     model = MLP((inp_feats, num_hidden, num_output))

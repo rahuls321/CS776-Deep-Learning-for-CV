@@ -311,8 +311,8 @@ print("Training on Unaugmented Datasets")
 # print("original_train_feat_vec[:100]: ", original_train_feat_vec[:1000])
 train_labels = get_one_hot_vector(train_data['labels'])
 test_labels = get_one_hot_vector(test_data['labels'])
-unaugmented_model = Model(original_train_feat_vec[:1000], train_labels)
-acc = unaugmented_model.evaluate(original_test_feat_vec[:1000], test_labels)
+unaugmented_model = Model(original_train_feat_vec, train_labels)
+acc = unaugmented_model.evaluate(original_test_feat_vec, test_labels)
 print("Testing Accuracy or Performance on Unaugmented Datasets: %.2f" %(acc*100))
 
 """## Question 7"""
