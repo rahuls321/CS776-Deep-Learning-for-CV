@@ -11,6 +11,7 @@ Original file is located at
 ##from google.colab import drive 
 #drive.mount('/content/gdrive')
 
+from cgi import test
 import pickle
 import numpy as np
 import os
@@ -178,7 +179,7 @@ def contrast_and_flip(image):
         img = img[:, ::-1, :] #Horizontal Flipping
     return img, round(alpha, 3)
 
-image=org_train_images[8]
+image=org_train_images[random.randint(0, org_train_images.shape[0])]
 rotated_image, degree = random_rotation(image)
 cutout_image, size = random_cutout(image)
 cropped_image, _ = random_crop(image)
@@ -190,30 +191,35 @@ plt.subplot(2, 2, 1)
 plt.axis('off')
 plt.title("Rotated Image with degree: "+ str(degree))
 plt.imshow(rotated_image)
+# plt.savefig("./output/rotated_image.jpg")
 
 plt.subplot(2, 2, 2)
 plt.axis('off')
 plt.title("Cutout with size: "+str(size)+"X"+str(size))
 plt.imshow(cutout_image)
+# plt.savefig("./output/cutout_image.jpg")
 
 plt.subplot(2, 2, 3)
 plt.axis('off')
 plt.title("Cropped Image")
 plt.imshow(cropped_image)
+# plt.savefig("./output/cropped_image.jpg")
 
 plt.subplot(2, 2, 4)
 plt.axis('off')
-plt.title("Contrast and flipped \n Image wwith prob. 0.5 \n and alpha: "+str(alpha))
+plt.title("Contrast and flipped \n Image with prob. 0.5 \n and alpha: "+str(alpha))
 plt.imshow(contrast_image)
 
 fig.tight_layout()
 
 plt.show()
+plt.savefig("./output/augmented_images.jpg")
 
 """## Question 3"""
 
-def get_augmented_images(data):
+def get_augmented_images(data, labels):
     augmented_img=[]
+    augmented_labels=[]
     preprocess_func = {0: random_rotation, 1: random_cutout, 2: random_crop, 3: contrast_and_flip}
     i=0
     for img in data:
@@ -229,22 +235,33 @@ def get_augmented_images(data):
         else:
             img1, _ = preprocess_func[rndm_idx](img)
             img2, _ = preprocess_func[rndm_idx](img)
-        i+=1
         augmented_img.append(img1)
         augmented_img.append(img2)
-    return np.array(augmented_img)
+        augmented_labels.append(labels[i])
+        augmented_labels.append(labels[i])
+        i+=1
+    return np.array(augmented_img), augmented_labels
 
-augmented_img = get_augmented_images(org_train_images)
-print(augmented_img.shape)
+train_augmented_img, train_augmented_labels = get_augmented_images(org_train_images, train_data['labels'])
+test_augmented_img, test_augmented_labels = get_augmented_images(org_test_images, test_data['labels'])
 
 plt.figure(figsize= (15,15))
 for i in range(150):
   plt.subplot(16,16,i+1)
   plt.axis('off')
-  plt.imshow(augmented_img[i])
+  plt.imshow(train_augmented_img[i])
 
-augmented_img = np.vstack([org_train_images, augmented_img])
-print(augmented_img.shape)
+plt.savefig("./output/train_augmented_image.jpg")
+
+train_augmented_img = np.vstack([org_train_images, train_augmented_img])
+test_augmented_img = np.vstack([org_test_images, test_augmented_img])
+print("Augmented Train Images: ", train_augmented_img.shape)
+print("Augmented Test Images: ", test_augmented_img.shape)
+
+augmented_train_labels = train_augmented_labels + train_data['labels']
+augmented_test_labels = test_augmented_labels + test_data['labels']
+print("Augmented Train Labels: ", np.array(augmented_train_labels).shape)
+print("Augmented Test Labels: ", np.array(augmented_test_labels).shape)
 
 """## Question 4"""
 
@@ -275,11 +292,26 @@ def get_feat_vec(images, obj):
 #print("Original Training Image shape: ", org_train_images.shape)
 
 obj = BBResNet18()
-augmented_feat_vec=get_feat_vec(augmented_img[:1000], obj)
-original_feat_vec=get_feat_vec(org_train_images, obj)
-print("Augmented Training Image Vector shape: ", augmented_feat_vec.shape)
-print("Original Training Image Vector shape: ", original_feat_vec.shape)
+augmented_train_feat_vec=get_feat_vec(train_augmented_img, obj)
+augmented_test_feat_vec=get_feat_vec(test_augmented_img, obj)
+print("Augmented Training Image Vector shape: ", augmented_train_feat_vec.shape)
+print("Augmented Test Image Vector shape: ", augmented_test_feat_vec.shape)
+
+original_train_feat_vec=get_feat_vec(org_train_images, obj)
+original_test_feat_vec=get_feat_vec(org_test_images, obj)
+print("Original Training Image Vector shape: ", original_train_feat_vec.shape)
+print("Original Test Image Vector shape: ", original_test_feat_vec.shape)
 
 
-"""## Question 5"""
-Model(original_feat_vec, train_data['labels'], np.arange(10))
+"""## Question 5 & 6"""
+labels=np.arange(10)
+print("Training on Unaugmented Datasets")
+unaugmented_model = Model(original_train_feat_vec, train_data['labels'])
+acc = unaugmented_model.evaluate(original_test_feat_vec, test_data['labels'])
+print("Testing Accuracy or Performance on Unaugmented Datasets: %.2f" %(acc*100))
+
+"""## Question 7"""
+print("Training on Augmented Datasets")
+augmented_model = Model(augmented_train_feat_vec, augmented_train_labels)
+acc = augmented_model.evaluate(augmented_test_feat_vec, augmented_test_labels)
+print("Testing Accuracy or Performance on Augmented Datasets: %.2f" %(acc*100))

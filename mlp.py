@@ -29,9 +29,16 @@ def cross_entropy_loss(predicted, target):
     loss = -np.sum(log_likelihood)/target.shape[0]
     return loss
 
+def get_one_hot_vector(y):
+    y=np.array(y)
+    y_one_hot = np.zeros((y.shape[0], 10))
+    y_one_hot[np.arange(y.shape[0]), y] = 1
+    y_one_hot = y_one_hot.reshape(-1, 10, 1)
+    return y_one_hot
+
 class MLP(object):
     def __init__(self, input_size):
-        self.weights = [0.1*np.random.randn(x, y) for x, y in zip(input_size[:-1], input_size[1:])]
+        self.weights = [np.random.randn(x, y) for x, y in zip(input_size[:-1], input_size[1:])]
         self.biases = [np.zeros((1, x)) for x in input_size[1:]]
         # print("Weights shape1: ", self.weights[0].shape)
         # print("Weights shape2: ", self.weights[1].shape)
@@ -96,7 +103,7 @@ class MLP(object):
         # exit()
         return loss, delta_b, delta_w
 
-    def accuracy(self, y, output):
+    def evaluate(self, X, y):
         # count=0
         # for p, o in zip(y, output):
         #     if p==o:
@@ -104,23 +111,24 @@ class MLP(object):
         # return float(count)/y.shape[0]
 
         count = 0
-        for p, _y in zip(output, y):
+        for x, _y in zip(X, y):
             # postion of maximum value is the predicted label
             # print("pred: ", np.argmax(p))
             # print("pred: ", p)
             # print("y: ", np.argmax(_y))
-            # print("y: ", _y)
-            if np.argmax(p) == np.argmax(_y):
+            # print("y: ", _y)'
+            _, _ , _,output = self.feedforward(x)
+            if np.argmax(output) == np.argmax(_y):
                 count += 1
-        return float(count) / y.shape[0]
+        return float(count) / X.shape[0]
 
-    def predict(self, X, labels):
-        preds = np.array([])
-        for x in X:
-            _, _, _, outs = self.feedforward(x)
-            preds = np.append(preds, labels[np.argmax(outs)])
-        # preds = np.array([labels[int(p)] for p in preds])
-        return preds
+    # def predict(self, X, labels):
+    #     preds = np.array([])
+    #     for x in X:
+    #         _, _, _, outs = self.feedforward(x)
+    #         preds = np.append(preds, labels[np.argmax(outs)])
+    #     # preds = np.array([labels[int(p)] for p in preds])
+    #     return preds
     
     def train(self, X, y, learning_rate=0.01, epochs=5, batch_size=100):
         for i in range(epochs):
@@ -145,7 +153,7 @@ class MLP(object):
 
                 for bx, by in zip(batch_x, batch_y):
                     loss, delta_b, delta_w = self.backpropogation(bx, by)
-                    # losses+=loss
+                    losses+=loss
                     del_b = [db + ddb for db, ddb in zip(del_b, delta_b)]
                     del_w = [dw + ddw for dw, ddw in zip(del_w, delta_w)]
 
@@ -154,12 +162,12 @@ class MLP(object):
 
             # Evaluate performance
             # Training data
-            _, _ , _,output = self.feedforward(X)
-            train_acc = self.accuracy(y, output)
-            train_loss=0.0
-            for out, _y in zip(output, y):
-                train_loss += cross_entropy_loss(out, _y)
-            print("Epoch: %d Training loss: %.3f and Training accuracy: %.3f" %(i, train_loss, train_acc))
+            # _, _ , _,output = self.feedforward(X)
+            # train_acc = self.accuracy(X, y)
+            # train_loss=0.0
+            # for out, _y in zip(output, y):
+            #     train_loss += cross_entropy_loss(out, _y)
+            print("Epoch: %d Training loss: %.3f" %(i, loss))
 
 # X = np.array([[1, 2, 3, 2.5],
 #      [2.0, 5.0, -1.0, 2.0],
@@ -175,23 +183,16 @@ class MLP(object):
 # print(layer1.backpropogation(X, one_hot))
 # print(layer1.train(X, one_hot, epochs=10))
 
-def Model(X, y, labels):
+def Model(X_train, y_train):
 
     inp_feats=512
     num_hidden=64
     num_output=10
-    epochs=100
+    epochs=20
     batch_size=100
     learning_rate=0.01
-    y=np.array(y)
-    y_one_hot = np.zeros((y.shape[0], 10))
-    y_one_hot[np.arange(y.shape[0]), y] = 1
-    y_one_hot = y_one_hot.reshape(-1, 10, 1)
+    y_train = get_one_hot_vector(y_train)
 
     model = MLP((inp_feats, num_hidden, num_output))
-    model.train(X, y_one_hot, epochs=epochs, batch_size=batch_size, learning_rate=learning_rate)
-    # pred = model.predict(X, labels)
-    # pred = pred.astype(dtype=np.int32)
-    # print(y)
-    # print(pred)
-    # print(model.accuracy(pred, y))
+    model.train(X_train, y_train, epochs=epochs, batch_size=batch_size, learning_rate=learning_rate)
+    return model
