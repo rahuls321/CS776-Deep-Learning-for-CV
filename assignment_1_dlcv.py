@@ -21,7 +21,7 @@ import random
 import matplotlib.pyplot as plt
 
 from feature_extractor import BBResNet18
-from mlp import Model
+from mlp import Model, get_one_hot_vector
 
 def unpickle(datapaths):
     labels_mapping={}
@@ -242,8 +242,8 @@ def get_augmented_images(data, labels):
         i+=1
     return np.array(augmented_img), augmented_labels
 
-train_augmented_img, train_augmented_labels = get_augmented_images(org_train_images, train_data['labels'])
-test_augmented_img, test_augmented_labels = get_augmented_images(org_test_images, test_data['labels'])
+train_augmented_img, train_augmented_labels = get_augmented_images(org_train_images[:100], train_data['labels'])
+test_augmented_img, test_augmented_labels = get_augmented_images(org_test_images[:100], test_data['labels'])
 
 plt.figure(figsize= (15,15))
 for i in range(150):
@@ -292,13 +292,15 @@ def get_feat_vec(images, obj):
 #print("Original Training Image shape: ", org_train_images.shape)
 
 obj = BBResNet18()
-augmented_train_feat_vec=get_feat_vec(train_augmented_img, obj)
-augmented_test_feat_vec=get_feat_vec(test_augmented_img, obj)
-print("Augmented Training Image Vector shape: ", augmented_train_feat_vec.shape)
-print("Augmented Test Image Vector shape: ", augmented_test_feat_vec.shape)
+# augmented_train_feat_vec=get_feat_vec(train_augmented_img, obj)
+# augmented_test_feat_vec=get_feat_vec(test_augmented_img, obj)
+# print("Augmented Training Image Vector shape: ", augmented_train_feat_vec.shape)
+# print("Augmented Test Image Vector shape: ", augmented_test_feat_vec.shape)
 
-original_train_feat_vec=get_feat_vec(org_train_images, obj)
-original_test_feat_vec=get_feat_vec(org_test_images, obj)
+print("Gettng Unaugmented Training Feature Vector")
+original_train_feat_vec=get_feat_vec(org_train_images[:1000], obj)
+print("Gettng Unaugmented Testing Feature Vector")
+original_test_feat_vec=get_feat_vec(org_test_images[:1000], obj)
 print("Original Training Image Vector shape: ", original_train_feat_vec.shape)
 print("Original Test Image Vector shape: ", original_test_feat_vec.shape)
 
@@ -306,12 +308,15 @@ print("Original Test Image Vector shape: ", original_test_feat_vec.shape)
 """## Question 5 & 6"""
 labels=np.arange(10)
 print("Training on Unaugmented Datasets")
-unaugmented_model = Model(original_train_feat_vec, train_data['labels'])
-acc = unaugmented_model.evaluate(original_test_feat_vec, test_data['labels'])
+# print("original_train_feat_vec[:100]: ", original_train_feat_vec[:1000])
+train_labels = get_one_hot_vector(train_data['labels'])
+test_labels = get_one_hot_vector(test_data['labels'])
+unaugmented_model = Model(original_train_feat_vec[:1000], train_labels)
+acc = unaugmented_model.evaluate(original_test_feat_vec[:1000], test_labels)
 print("Testing Accuracy or Performance on Unaugmented Datasets: %.2f" %(acc*100))
 
 """## Question 7"""
-print("Training on Augmented Datasets")
-augmented_model = Model(augmented_train_feat_vec, augmented_train_labels)
-acc = augmented_model.evaluate(augmented_test_feat_vec, augmented_test_labels)
-print("Testing Accuracy or Performance on Augmented Datasets: %.2f" %(acc*100))
+# print("Training on Augmented Datasets")
+# augmented_model = Model(augmented_train_feat_vec, augmented_train_labels)
+# acc = augmented_model.evaluate(augmented_test_feat_vec, augmented_test_labels)
+# print("Testing Accuracy or Performance on Augmented Datasets: %.2f" %(acc*100))
