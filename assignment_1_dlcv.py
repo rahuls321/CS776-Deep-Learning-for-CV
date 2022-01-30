@@ -245,13 +245,14 @@ def get_augmented_images(data, labels):
 train_augmented_img, train_augmented_labels = get_augmented_images(org_train_images[:100], train_data['labels'])
 test_augmented_img, test_augmented_labels = get_augmented_images(org_test_images[:100], test_data['labels'])
 
-plt.figure(figsize= (15,15))
+plt.figure(figsize= (10,10))
 for i in range(150):
   plt.subplot(16,16,i+1)
   plt.axis('off')
   plt.imshow(train_augmented_img[i])
 
 plt.savefig("./output/train_augmented_image.jpg")
+plt.close()
 
 train_augmented_img = np.vstack([org_train_images, train_augmented_img])
 test_augmented_img = np.vstack([org_test_images, test_augmented_img])
@@ -281,7 +282,7 @@ def get_feat_vec(images, obj):
     for img in images:
         img = cv2.resize(img, (224, 224))
         img = np.transpose(img, (2, 1, 0))
-        img=np.array(img, dtype=np.float32)
+        img=np.array(img/255, dtype=np.float32)
         feat_vec.append(obj.feature_extraction(np.array([img]))[0])
     return np.array(feat_vec)
 
@@ -297,10 +298,10 @@ obj = BBResNet18()
 # print("Augmented Training Image Vector shape: ", augmented_train_feat_vec.shape)
 # print("Augmented Test Image Vector shape: ", augmented_test_feat_vec.shape)
 
-print("Gettng Unaugmented Training Feature Vector")
-original_train_feat_vec=get_feat_vec(org_train_images[:1000], obj)
-print("Gettng Unaugmented Testing Feature Vector")
-original_test_feat_vec=get_feat_vec(org_test_images[:1000], obj)
+print("Getting Unaugmented Training Feature Vector")
+original_train_feat_vec=get_feat_vec(org_train_images, obj)
+print("Getting Unaugmented Testing Feature Vector")
+original_test_feat_vec=get_feat_vec(org_test_images, obj)
 print("Original Training Image Vector shape: ", original_train_feat_vec.shape)
 print("Original Test Image Vector shape: ", original_test_feat_vec.shape)
 
