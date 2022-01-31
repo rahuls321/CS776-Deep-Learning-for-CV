@@ -7,10 +7,11 @@ Assignment 1
 **Contact - +91-7761937143**
 **Course - CS776 - Deep Learning for Computer Vision**
 
+Following are the package dependencies with their versions 
 
-Following are the package dependencies with their versions and I have also created one requirements.txt
-So do `pip install -r requirements.txt` will install all packages.
 Packages dependencies
+
+```pip
 certifi==2021.10.8
 cycler==0.11.0
 fonttools==4.29.0
@@ -27,6 +28,16 @@ torch==1.10.1+cu113
 torchaudio==0.10.1+cu113
 torchvision==0.11.2+cu113
 typing_extensions==4.0.1
+```
+
+I have also created one requirements.txt
+So do 
+
+```pip
+pip install -r requirements.txt
+``` 
+
+will install all packages.
 
 This folder contains following directories and files 
 1. **cifar-10-batches-py** - contains all the data used in this assignment 1
@@ -44,5 +55,5 @@ This folder contains following directories and files
 
 To run the entire assignment, go to home directory where this README file is there and use --> ./run.sh 
 
-# ./run.sh -- this will generate all the results in the output folder. 
-# Incase you face any issue in running the code, just let me know here - rahulkumar21@iitk.ac.in or whatsapp @ 7761937143
+### ./run.sh -- this will generate all the results in the output folder. 
+### Incase you face any issue in running the code, just let me know here - rahulkumar21@iitk.ac.in or whatsapp @ 7761937143
