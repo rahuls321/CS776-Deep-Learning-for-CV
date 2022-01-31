@@ -14,11 +14,6 @@ def softmax(x):
         softmax(x) = exp(x) / sum(exp(x))
     '''
     
-    # exit()
-    # x = x.flatten()
-    # print("softmax: ", x)
-    # print("softmax: ", x.shape)
-    # exit()
     exp_values = np.exp(x - np.max(x, axis=1, keepdims=True))
     # print("exp: ", exp_values)
     prob = exp_values / np.sum(exp_values, axis=1, keepdims=True)
@@ -44,6 +39,9 @@ def cross_entropy_loss(predicted, target):
     return np.sum(loss)
 
 def get_one_hot_vector(y):
+    """
+    generating one hot vector for class labels
+    """
     y=np.array(y)
     y_one_hot = np.zeros((y.shape[0], 10))
     y_one_hot[np.arange(y.shape[0]), y] = 1
@@ -75,7 +73,7 @@ class MLP(object):
         # print("a2 shape: ", a2.shape)
         return z1, a1, z2, a2
 
-    def backpropogation(self, X, y):
+    def backpropagation(self, X, y):
 
         delta_w = [np.zeros(w.shape) for w in self.weights]
         delta_b = [np.zeros(b.shape) for b in self.biases]
@@ -126,12 +124,6 @@ class MLP(object):
 
         #Here y is single value and x is same as input
         count = 0
-        # print("x: ", X[0])
-        # # print("x: ", X[0].shape)
-
-        # print("self.weights[0]: ", self.weights[0])
-        # print("self.biases[0]: ", self.biases[0])
-        # exit()
         for x, _y in zip(X, y):
             # postion of maximum value is the predicted label
             # print("pred: ", np.argmax(p))
@@ -178,29 +170,26 @@ class MLP(object):
 
                 # print("Batch_x: ", batch_x.shape)
                 # print("Batch_y: ", batch_y.shape)
-                losses=0.0
-
-                # for bx, by in zip(batch_x, batch_y):
-                    # loss, delta_b, delta_w = self.backpropogation(np.array([bx]).T, by)
-                loss, delta_b, delta_w = self.backpropogation(batch_x.T, batch_y)
+                # losses=0.0
+                #Performing Backpropagation
+                loss, delta_b, delta_w = self.backpropagation(batch_x.T, batch_y)
                 # print("Delta_b_0: ", delta_b[0].shape)
                 # print("Delta_w_0: ", delta_w[0].shape)
                 # print("Delta_b_1: ", delta_b[1].shape)
                 # print("Delta_w_1: ", delta_w[1].shape)
                 # # exit()
+                #Maintaining the original shape according to batch size when input is less than given batch size
                 if delta_b[0].shape[1] < batch_size:
                     # print(delta_b[0].shape)
                     size_left = batch_size - delta_b[0].shape[1]
                     delta_b[0] = np.pad(delta_b[0], ((0,0), (0,size_left)))
-                #     # delta_w[0] = np.pad(delta_w[0], ((0,0), (0,size_left)))
 
                 if delta_b[1].shape[1] < batch_size:
                     # print(delta_b[1].shape)
                     size_left = batch_size - delta_b[1].shape[1]
                     delta_b[1] = np.pad(delta_b[1], ((0,0), (0, size_left)))
-                # #     delta_w[1] = np.pad(delta_w[1], ((0,0), (0, size_left)))
 
-                losses+=loss
+                # losses+=loss
                 
                 # print("Del_b_0: ", del_b[0].shape)
                 # print("Del_b_1: ", del_b[1].shape)
@@ -211,6 +200,7 @@ class MLP(object):
                     del_w = [delta_w[0], delta_w[1]]
                     flag=1
                 else:
+                    #It will encounter only when there's minimum loss is getting as compared to previous batches
                     if loss < loss_min:
                         loss_min=loss
                         for i, (db, dw)in enumerate(zip(delta_b, delta_w)):
@@ -237,33 +227,13 @@ class MLP(object):
             # print("Bias shape2: ", self.biases[1].shape)
 
             # Evaluate performance
-            # Training data
-            # _, _ , _,output = self.feedforward(X)
             train_acc = self.evaluate(X, y)
-            # exit()
-            # train_loss=0.0
-            # for out, _y in zip(output, y):
-            #     train_loss += cross_entropy_loss(out, _y)
             history_training_loss.append(loss_min)
             history_training_acc.append(train_acc)
             print("Epoch: %d Training loss: %.3f Training accuracy: %.2f" %(epoch, loss_min, train_acc*100))
         return history_training_acc, history_training_loss
 
-# X = np.array([[1, 2, 3, 2.5],
-#      [2.0, 5.0, -1.0, 2.0],
-#      [-1.5, 2.7, 3.3, -0.8]])
-
-# y = np.array([0, 1, 2])
-# y=y.reshape((3, 1))
-# # print(y.shape)
-# one_hot = np.zeros((y.shape[0], 3))
-# one_hot[np.arange(y.shape[0]), y] = 1
-# layer1 = MLP((4, 5, 3))
-# print(layer1.feedforward(X))
-# print(layer1.backpropogation(X, one_hot))
-# print(layer1.train(X, one_hot, epochs=10))
-
-def Model(X_train, y_train):
+def Model(X_train, y_train, X_test, y_test, augmented=False):
 
     inp_feats=512
     num_hidden=64
@@ -273,14 +243,23 @@ def Model(X_train, y_train):
     learning_rate=0.01
     print("y_train: ",y_train.shape)
     # y_train = get_one_hot_vector(y_train)
-    model = MLP((inp_feats, num_hidden, num_output))
-    total_training_acc, total_training_loss = model.train(X_train, y_train, epochs=epochs, batch_size=batch_size, learning_rate=learning_rate)
-    plt.figure(figsize= (8,8))
-    plt.plot(np.arange(epochs), total_training_acc, label='Total_trainig_acc')
-    plt.plot(np.arange(epochs), total_training_loss, label='Total_training_loss')
-    plt.xlabel("Epochs")
-    plt.ylabel("Training Loss and Accuracy")
-    plt.title("Loss/Accuracy vs Epochs")
-    plt.legend()
-    plt.savefig("./output/loss-accuracy-graph.jpg")
+    for batch_size in [16, 32, 64]:
+        print("batch-size: ", batch_size)
+        for learning_rate in [0.01]:
+            ##print("batch-size: ", batch_size)
+            print("learning_rate: ", learning_rate)
+            model = MLP((inp_feats, num_hidden, num_output))
+            total_training_acc, total_training_loss = model.train(X_train, y_train, epochs=epochs, batch_size=batch_size, learning_rate=learning_rate)
+            acc = model.evaluate(X_test, y_test)
+            print("Testing Accuracy or Performance Measure in %: %.2f" %(acc*100))
+            plt.figure(figsize= (8,8))
+            plt.plot(np.arange(epochs), total_training_acc, label='Total_trainig_acc')
+            plt.plot(np.arange(epochs), total_training_loss, label='Total_training_loss')
+            plt.xlabel("Epochs")
+            plt.ylabel("Training Loss and Accuracy")
+            plt.title("Loss/Accuracy vs Epochs")
+            plt.legend()
+            if(augmented):
+                plt.savefig("./output/augmented/loss-accuracy-graph-"+str(batch_size)+"-"+str(learning_rate)+".jpg")
+            else: plt.savefig("./output/loss-accuracy-graph-"+str(batch_size)+"-"+str(learning_rate)+".jpg")
     return model
