@@ -1,0 +1,468 @@
+data_batch_2
+data_batch_1
+batches.meta
+data_batch_4
+data_batch_3
+data_batch_5
+test_batch
+Total train data size: (50000, 3072)
+Total test data size: (10000, 3072)
+Labels Mapping:  {b'num_cases_per_batch': 10000, b'label_names': [b'airplane', b'automobile', b'bird', b'cat', b'deer', b'dog', b'frog', b'horse', b'ship', b'truck'], b'num_vis': 3072}
+(10000, 32, 32, 3)
+Image no.:  0 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  1000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  2000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  3000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  4000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  5000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  6000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  7000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  8000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  9000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  10000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  11000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  12000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  13000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  14000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  15000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  16000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  17000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  18000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  19000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  20000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  21000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  22000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  23000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  24000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  25000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  26000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  27000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  28000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  29000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  30000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  31000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  32000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  33000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  34000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  35000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  36000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  37000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  38000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  39000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  40000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  41000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  42000 Random function:  <function random_cutout at 0x7ff23452cd30>
+Image no.:  43000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  44000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  45000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  46000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  47000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  48000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  49000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  0 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  1000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  2000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  3000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  4000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  5000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Image no.:  6000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  7000 Random function:  <function contrast_and_flip at 0x7ff23452ce50>
+Image no.:  8000 Random function:  <function random_crop at 0x7ff23452cdc0>
+Image no.:  9000 Random function:  <function random_rotation at 0x7ff23452cca0>
+Augmented Train Images:  (150000, 32, 32, 3)
+Augmented Test Images:  (30000, 32, 32, 3)
+Augmented Train Labels:  (150000,)
+Augmented Test Labels:  (30000,)
+Getting Augmented Training Feature Vector
+Getting Augmented Testing Feature Vector
+Augmented Training Image Vector shape:  (150000, 512)
+Augmented Test Image Vector shape:  (30000, 512)
+Getting Unaugmented Training Feature Vector
+Getting Unaugmented Testing Feature Vector
+Original Training Image Vector shape:  (50000, 512)
+Original Test Image Vector shape:  (10000, 512)
+Training on Unaugmented Datasets
+y_train:  (50000, 10)
+batch-size:  16
+learning_rate:  0.01
+Weights shape1:  (64, 512)
+Weights shape2:  (10, 64)
+Bias shape1:  (64, 1)
+Bias shape2:  (10, 1)
+Epoch: 0 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 1 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 2 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 3 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 4 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 5 Training loss: 9999.000 Training accuracy: 13.43
+Epoch: 6 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 7 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 8 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 9 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 10 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 11 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 12 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 13 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 14 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 15 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 16 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 17 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 18 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 19 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 20 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 21 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 22 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 23 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 24 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 25 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 26 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 27 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 28 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 29 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 30 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 31 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 32 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 33 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 34 Training loss: 9999.000 Training accuracy: 10.01
+Epoch: 35 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 36 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 37 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 38 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 39 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 40 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 41 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 42 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 43 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 44 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 45 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 46 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 47 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 48 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 49 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 50 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 51 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 52 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 53 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 54 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 55 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 56 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 57 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 58 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 59 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 60 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 61 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 62 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 63 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 64 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 65 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 66 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 67 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 68 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 69 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 70 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 71 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 72 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 73 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 74 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 75 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 76 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 77 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 78 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 79 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 80 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 81 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 82 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 83 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 84 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 85 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 86 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 87 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 88 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 89 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 90 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 91 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 92 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 93 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 94 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 95 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 96 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 97 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 98 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 99 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 100 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 101 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 102 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 103 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 104 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 105 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 106 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 107 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 108 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 109 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 110 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 111 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 112 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 113 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 114 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 115 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 116 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 117 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 118 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 119 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 120 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 121 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 122 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 123 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 124 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 125 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 126 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 127 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 128 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 129 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 130 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 131 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 132 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 133 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 134 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 135 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 136 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 137 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 138 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 139 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 140 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 141 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 142 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 143 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 144 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 145 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 146 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 147 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 148 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 149 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 150 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 151 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 152 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 153 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 154 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 155 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 156 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 157 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 158 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 159 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 160 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 161 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 162 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 163 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 164 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 165 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 166 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 167 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 168 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 169 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 170 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 171 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 172 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 173 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 174 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 175 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 176 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 177 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 178 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 179 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 180 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 181 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 182 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 183 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 184 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 185 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 186 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 187 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 188 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 189 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 190 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 191 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 192 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 193 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 194 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 195 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 196 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 197 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 198 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 199 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 200 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 201 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 202 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 203 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 204 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 205 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 206 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 207 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 208 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 209 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 210 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 211 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 212 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 213 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 214 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 215 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 216 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 217 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 218 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 219 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 220 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 221 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 222 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 223 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 224 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 225 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 226 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 227 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 228 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 229 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 230 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 231 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 232 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 233 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 234 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 235 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 236 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 237 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 238 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 239 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 240 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 241 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 242 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 243 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 244 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 245 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 246 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 247 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 248 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 249 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 250 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 251 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 252 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 253 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 254 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 255 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 256 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 257 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 258 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 259 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 260 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 261 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 262 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 263 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 264 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 265 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 266 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 267 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 268 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 269 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 270 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 271 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 272 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 273 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 274 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 275 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 276 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 277 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 278 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 279 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 280 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 281 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 282 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 283 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 284 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 285 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 286 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 287 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 288 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 289 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 290 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 291 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 292 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 293 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 294 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 295 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 296 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 297 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 298 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 299 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 300 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 301 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 302 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 303 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 304 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 305 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 306 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 307 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 308 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 309 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 310 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 311 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 312 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 313 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 314 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 315 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 316 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 317 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 318 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 319 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 320 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 321 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 322 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 323 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 324 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 325 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 326 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 327 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 328 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 329 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 330 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 331 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 332 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 333 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 334 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 335 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 336 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 337 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 338 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 339 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 340 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 341 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 342 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 343 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 344 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 345 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 346 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 347 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 348 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 349 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 350 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 351 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 352 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 353 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 354 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 355 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 356 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 357 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 358 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 359 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 360 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 361 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 362 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 363 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 364 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 365 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 366 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 367 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 368 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 369 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 370 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 371 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 372 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 373 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 374 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 375 Training loss: 9999.000 Training accuracy: 10.00
+Epoch: 376 Training loss: 9999.000 Training accuracy: 10.00

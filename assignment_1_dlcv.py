@@ -255,8 +255,8 @@ test_augmented_img = np.vstack([org_test_images, test_augmented_img])
 print("Augmented Train Images: ", train_augmented_img.shape)
 print("Augmented Test Images: ", test_augmented_img.shape)
 
-augmented_train_labels = train_augmented_labels + train_data['labels']
-augmented_test_labels = test_augmented_labels + test_data['labels']
+augmented_train_labels = train_data['labels'] + train_augmented_labels
+augmented_test_labels = test_data['labels'] + test_augmented_labels
 print("Augmented Train Labels: ", np.array(augmented_train_labels).shape)
 print("Augmented Test Labels: ", np.array(augmented_test_labels).shape)
 
@@ -279,7 +279,8 @@ def get_feat_vec(images, obj):
 		img = cv2.resize(img, (224, 224))
 		img = np.transpose(img, (2, 1, 0))
 		#Performing Normalization before sending into ResNet model
-		img=np.array(img/255, dtype=np.float32)
+		img = img/255
+		img=np.array(img, dtype=np.float32)
 		feat_vec.append(obj.feature_extraction(np.array([img]))[0])
 	return np.array(feat_vec)
 
@@ -289,13 +290,17 @@ print("Getting Augmented Training Feature Vector")
 augmented_train_feat_vec=get_feat_vec(train_augmented_img, obj)
 print("Getting Augmented Testing Feature Vector")
 augmented_test_feat_vec=get_feat_vec(test_augmented_img, obj)
+np.save('augmented_train_feat_vec.npy', augmented_train_feat_vec)
+np.save('augmented_test_feat_vec.npy', augmented_test_feat_vec)
 print("Augmented Training Image Vector shape: ", augmented_train_feat_vec.shape)
 print("Augmented Test Image Vector shape: ", augmented_test_feat_vec.shape)
 
 print("Getting Unaugmented Training Feature Vector")
-original_train_feat_vec=get_feat_vec(org_train_images, obj)
+original_train_feat_vec= np.load('original_train_feat_vec.npy')  #get_feat_vec(org_train_images, obj)
 print("Getting Unaugmented Testing Feature Vector")
-original_test_feat_vec=get_feat_vec(org_test_images, obj)
+original_test_feat_vec=  np.load('original_test_feat_vec.npy') #get_feat_vec(org_test_images, obj)
+# np.save('original_train_feat_vec.npy', original_train_feat_vec)
+# np.save('original_test_feat_vec.npy', original_test_feat_vec)
 print("Original Training Image Vector shape: ", original_train_feat_vec.shape)
 print("Original Test Image Vector shape: ", original_test_feat_vec.shape)
 
