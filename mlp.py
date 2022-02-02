@@ -3,6 +3,8 @@ from cProfile import label
 import numpy as np
 import matplotlib.pyplot as plt
 
+from sklearn.metrics import precision_score, recall_score, confusion_matrix, classification_report, accuracy_score, f1_score
+
 def relu(x, deriv=False):
     #ReLU activation function
     if(deriv):
@@ -49,9 +51,19 @@ def get_one_hot_vector(y):
     return y_one_hot
 
 class MLP(object):
-    def __init__(self, input_size):
-        self.weights = [np.random.normal(0, 2/x, (y, x)) for x, y in zip(input_size[:-1], input_size[1:])]
-        self.biases = [np.zeros((x, 1)) for x in input_size[1:]]
+    def __init__(self, input_size, load_model_weights, augmented):
+        if load_model_weights:
+            print("Loading from pretrained model")
+            if(augmented):
+                read_weights = np.load(load_model_weights+'/augmented-model_weights.npy', allow_pickle='TRUE').item()
+            else:
+                read_weights = np.load(load_model_weights+'/unaugmented-model_weights.npy', allow_pickle='TRUE').item()
+            self.weights = read_weights['weights']
+            self.biases = read_weights['biases']
+        else:
+            print("Initialising weights and biases")
+            self.weights = [np.random.normal(0, 2/x, (y, x)) for x, y in zip(input_size[:-1], input_size[1:])]
+            self.biases = [np.zeros((x, 1)) for x in input_size[1:]]
         print("Weights shape1: ", self.weights[0].shape)
         print("Weights shape2: ", self.weights[1].shape)
 
@@ -127,6 +139,7 @@ class MLP(object):
 
         #Here y is single value and x is same as input
         count = 0
+        preds = np.array([])
         for x, _y in zip(X, y):
             # postion of maximum value is the predicted label
             # print("pred: ", np.argmax(p))
@@ -135,12 +148,13 @@ class MLP(object):
             # print("y: ", _y)
             # print("y: ", np.argmax(_y))
             _, _ , _,output = self.feedforward(np.array([x]).T)
+            preds = np.append(preds, np.argmax(output))
             # print("output: ",  output)
             # print("output: ",  np.argmax(output))
             # exit()
             if np.argmax(output) == np.argmax(_y):
                 count += 1
-        return float(count) / X.shape[0]
+        return float(count) / X.shape[0], preds
 
     # def predict(self, X, labels):
     #     preds = np.array([])
@@ -151,7 +165,8 @@ class MLP(object):
     #     return preds
     
     def train(self, X, y, X_test, y_test, learning_rate=0.01, epochs=5, batch_size=100):
-        history_training_loss, history_training_acc, history_test_acc=[], [], []
+        history_training_loss, history_training_acc, history_test_acc, history_test_pred=[], [], [], []
+        model_weights = {}
         for epoch in range(epochs):
             # Shuffle
             permutation = np.random.permutation(X.shape[0])
@@ -224,6 +239,9 @@ class MLP(object):
             self.weights = [w - (learning_rate/batch_size)*dw for w, dw in zip(self.weights, del_w)]
             self.biases = [b - (learning_rate/batch_size)*db for b, db in zip(self.biases, del_b)]
 
+            model_weights['weights'] = self.weights
+            model_weights['biases'] = self.biases
+
             # print("Weights shape1: ", self.weights[0].shape)
             # print("Weights shape2: ", self.weights[1].shape)
 
@@ -231,42 +249,58 @@ class MLP(object):
             # print("Bias shape2: ", self.biases[1].shape)
 
             # Evaluate performance
-            train_acc = self.evaluate(X, y)
-            test_acc = self.evaluate(X_test, y_test)
+            train_acc, _ = self.evaluate(X, y)
+            test_acc, test_pred = self.evaluate(X_test, y_test)
             history_training_loss.append(loss_min)
             history_training_acc.append(train_acc)
             history_test_acc.append(test_acc)
+            history_test_pred.append(test_pred)
             print("Epoch: %d Training loss: %.3f Training accuracy: %.2f" %(epoch, loss_min, train_acc*100))
-        return np.array(history_training_acc), np.array(history_training_loss), np.array(history_test_acc)
+        return np.array(history_training_acc), np.array(history_training_loss), np.array(history_test_acc), np.array(history_test_pred), model_weights
 
-def Model(X_train, y_train, X_test, y_test, augmented=False):
+def Model(X_train, y_train, X_test, y_test, model_wt_folder, out_folder, isModelWeightsAvailable=0, epochs=500, batch_size=32, learning_rate=0.01, augmented=False):
 
     inp_feats=512
     num_hidden=64
     num_output=10
-    epochs=500
-    batch_size=256
-    learning_rate=0.01
+    # batch_size=256
+    # learning_rate=0.01
+    print("Epochs: ", epochs)
     print("y_train: ",y_train.shape)
-    # y_train = get_one_hot_vector(y_train)
-    for batch_size in [32, 64, 128, 256]:
-        print("batch-size: ", batch_size)
-        for learning_rate in [0.1, 0.01, 0.001]:
-            ##print("batch-size: ", batch_size)
-            print("learning_rate: ", learning_rate)
-            model = MLP((inp_feats, num_hidden, num_output))
-            total_training_acc, total_training_loss, total_testing_acc = model.train(X_train, y_train, X_test, y_test, epochs=epochs, batch_size=batch_size, learning_rate=learning_rate)
-            # acc = model.evaluate(X_test, y_test)
-            print("Testing Accuracy or Performance Measure in percent: %.2f" %(total_testing_acc[np.argmax(total_training_acc)]*100))
-            plt.figure(figsize= (8,8))
-            plt.plot(np.arange(epochs), total_training_acc, label='Total_trainig_acc')
-            plt.plot(np.arange(epochs), total_training_loss, label='Total_training_loss')
-            # plt.plot(np.arange(epochs), total_testing_acc, label='Total_training_acc')
-            plt.xlabel("Epochs")
-            plt.ylabel("Training Accuracy and Loss")
-            plt.title("Loss/Accuracy vs Epochs - "+"batch_size-"+str(batch_size)+"-learning-rate-"+str(learning_rate))
-            plt.legend()
-            if(augmented):
-                plt.savefig("./output/augmented/loss-accuracy-graph-"+str(batch_size)+"-"+str(learning_rate)+".jpg")
-            else: plt.savefig("./output/loss-accuracy-graph-"+str(batch_size)+"-"+str(learning_rate)+".jpg")
+    print("batch-size: ", batch_size)
+    print("learning_rate: ", learning_rate)
+    if isModelWeightsAvailable:
+        print("Performance measure on test datasets")
+        model = MLP((inp_feats, num_hidden, num_output), model_wt_folder)
+        acc, prediction = model.evaluate(X_test, y_test)
+    else:
+        model = MLP((inp_feats, num_hidden, num_output), '', augmented)
+        total_training_acc, total_training_loss, total_testing_acc, total_test_pred , model_weights= model.train(X_train, y_train, X_test, y_test, epochs=epochs, batch_size=batch_size, learning_rate=learning_rate)
+        if(augmented):
+            np.save(model_wt_folder+'/augmented-model_weights.npy', model_weights)
+        else:
+            np.save(model_wt_folder+'/unaugmented-model_weights.npy', model_weights)
+        # acc = model.evaluate(X_test, y_test)
+        print("Testing Accuracy or Performance Measure in percent: %.2f at epoch: %d" %(total_testing_acc[np.argmax(total_training_acc)]*100, np.argmax(total_training_acc)+1))
+        print("With a loss: %.3f" %(total_training_loss[np.argmax(total_training_acc)]))
+        prediction = total_test_pred[np.argmax(total_training_acc)]
+    
+        plt.figure(figsize= (8,8))
+        plt.plot(np.arange(epochs), total_training_acc, label='Total_trainig_acc')
+        plt.plot(np.arange(epochs), total_training_loss, label='Total_training_loss')
+        # plt.plot(np.arange(epochs), total_testing_acc, label='Total_training_acc')
+        plt.xlabel("Epochs")
+        plt.ylabel("Training Accuracy and Loss")
+        plt.title("Loss/Accuracy vs Epochs - "+"batch_size-"+str(batch_size)+"-learning-rate-"+str(learning_rate))
+        plt.legend()
+        if(augmented):
+            plt.savefig(out_folder+"/augmented/augmented-loss-accuracy-graph-"+str(batch_size)+"-"+str(learning_rate)+".jpg")
+        else: plt.savefig(out_folder+"/unaugmented-loss-accuracy-graph-"+str(batch_size)+"-"+str(learning_rate)+".jpg")
+            
+    Y_test = y_test.argmax(axis=1)
+    print('Accuracy: %.3f' % (accuracy_score(Y_test, prediction)*100))
+    print('Precision: %.3f' % precision_score(Y_test, prediction, average='weighted'))
+    print('Recall: %.3f'% recall_score(Y_test, prediction, average='weighted'))
+    print('F1 score: %.3f'% f1_score(Y_test, prediction, average='weighted'))
+    print('confussion matrix:\n',confusion_matrix(Y_test, prediction))
     return model
