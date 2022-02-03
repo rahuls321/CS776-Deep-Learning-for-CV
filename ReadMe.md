@@ -1,12 +1,5 @@
 Assignment 1
 
-**Name - Rahul Kumar**
-**Roll No. - 21111069**
-**Prog. - Mtech CSE**
-**Email - rahulkumar21@iitk.ac.in**
-**Contact - +91-7761937143**
-**Course - CS776 - Deep Learning for Computer Vision**
-
 Following are the package dependencies with their versions 
 
 Packages dependencies
@@ -71,4 +64,3 @@ if not you can remove it from the arguments, it will generate the feature vector
 File size is so big so I'm providing the drive link of saved weights https://drive.google.com/drive/folders/1RjkzPHDjt54HvwchMHNBhQXU6EM-rXuh?usp=sharing. Download all the feat_vectors and put it in the feat_vector folder and pass the feat_vector folder path and done. 
 
 ### ./run.sh -- this will generate all the results in the out_folder. 
-### Incase you face any issue in running the code, just let me know here - rahulkumar21@iitk.ac.in or whatsapp @ 7761937143
