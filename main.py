@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     """## Question 3"""
     ##Generating Augmented Images
-    train_augmented_img, train_augmented_labels = get_augmented_images(org_train_images, train_data['labels'])
+    train_augmented_img, train_augmented_labels = get_augmented_images(org_train_images[:100], train_data['labels'])
     # test_augmented_img, test_augmented_labels = get_augmented_images(org_test_images, test_data['labels'])
 
     plt.figure(figsize= (10,10))
@@ -127,7 +127,7 @@ if __name__ == "__main__":
         # augmented_test_feat_vec=np.load(feat_vector+'/augmented_test_feat_vec.npy') 
     else:
         print("Generating Augmented Training Feature Vector")
-        augmented_train_feat_vec=get_feat_vec(train_augmented_img, obj)
+        augmented_train_feat_vec=get_feat_vec(train_augmented_img[:100], obj)
         # augmented_test_feat_vec=get_feat_vec(test_augmented_img, obj)
 
     # np.save('augmented_train_feat_vec.npy', augmented_train_feat_vec)
@@ -141,8 +141,8 @@ if __name__ == "__main__":
         original_test_feat_vec=  np.load(feat_vector+'/original_test_feat_vec.npy')
     else:
         print("Generating Unaugmented Training Feature Vector")
-        original_train_feat_vec= get_feat_vec(org_train_images, obj)
-        original_test_feat_vec=  get_feat_vec(org_test_images, obj)
+        original_train_feat_vec= get_feat_vec(org_train_images[:100], obj)
+        original_test_feat_vec=  get_feat_vec(org_test_images[:100], obj)
 
     # np.save('original_train_feat_vec.npy', original_train_feat_vec)
     # np.save('original_test_feat_vec.npy', original_test_feat_vec)

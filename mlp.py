@@ -3,7 +3,7 @@ from cProfile import label
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.metrics import precision_score, recall_score, confusion_matrix, classification_report, accuracy_score, f1_score
+# from sklearn.metrics import precision_score, recall_score, confusion_matrix, classification_report, accuracy_score, f1_score
 
 def relu(x, deriv=False):
     #ReLU activation function
@@ -17,12 +17,7 @@ def softmax(x):
     '''
     
     exp_values = np.exp(x - np.max(x, axis=1, keepdims=True))
-    # print("exp: ", exp_values)
     prob = exp_values / np.sum(exp_values, axis=1, keepdims=True)
-    # predict_class = np.argmax(prob, axis=1)
-    # prob = prob.reshape(-1, 10, 1)
-    # print("prob: ", prob)
-    # exit()
     return prob
 
 def cross_entropy_loss(predicted, target):
@@ -31,10 +26,6 @@ def cross_entropy_loss(predicted, target):
     target is labels (batch_size x 1)
     """
     log_likelihood = -np.log(predicted[range(target.shape[0]), target])
-    # print("target shape: ", target.shape)
-    # print("predicted shape: ", np.log(predicted).shape)
-    # exit()
-    # log_likelihood = np.multiply(target, np.log(predicted))
     loss = -np.sum(log_likelihood)/target.shape[0]
     # print("Loss: ", np.sum(loss))
     # exit()
@@ -62,8 +53,8 @@ class MLP(object):
             self.biases = read_weights['biases']
         else:
             print("Initialising weights and biases")
-            self.weights = [np.random.normal(0, 2/x, (y, x)) for x, y in zip(input_size[:-1], input_size[1:])]
-            self.biases = [np.zeros((x, 1)) for x in input_size[1:]]
+            self.weights = [np.random.randn(y, x)*0.1 for x, y in zip(input_size[:-1], input_size[1:])] #np.random.normal(0, 2/x, (y, x))
+            self.biases = [np.zeros((x, 1)) for x in input_size[1:]] 
         print("Weights shape1: ", self.weights[0].shape)
         print("Weights shape2: ", self.weights[1].shape)
 
@@ -71,11 +62,7 @@ class MLP(object):
         print("Bias shape2: ", self.biases[1].shape)
 
     def feedforward(self, x):
-        # print("X shape: ", x.shape)
-        # print("Weights shape1: ", self.weights[0].shape)
-        # print("Bias shape1: ", self.biases[0].shape)
-        # exit()
-        z1 = np.dot(self.weights[0], x) + self.biases[0][:, :x.shape[1]]
+        z1 = np.dot(self.weights[0], x) + self.biases[0][:, :x.shape[1]] #this is beacuse of different batch sizes
         # print("z1 shape: ", z1.shape)/
         a1 = relu(z1)
         # print("a1 shape: ", a1.shape)
@@ -90,8 +77,6 @@ class MLP(object):
         delta_w = [np.zeros(w.shape) for w in self.weights]
         delta_b = [np.zeros(b.shape) for b in self.biases]
 
-        # print("delta_w shape: ", delta_w[0].shape)
-        # print("delta_b shape: ", delta_b[0].shape)
 
         z1, a1, z2, a2 = self.feedforward(X)
         # exit()
@@ -101,23 +86,12 @@ class MLP(object):
         a2[range(y.shape[0]), y] -= 1
         # a2 /= a2.shape[0]
         error = a2
-        # print("a2: ", a2)
-        # print("y: ", y)
-        # print("error: ", error.shape)
-        # exit()
-        # print("a1: ", a1.shape)
 
         #derivative of softmax = predicted_output - actual_output
         #For Hidden Layer
         delta1 = error.T
         delta_b[1] = delta1 # np.sum(delta1, axis=0, keepdims=True)
         delta_w[1] = np.dot(delta1, a1.T)
-        # print("delta_b[1].shape: ", delta_b[1].shape)
-        # print("delta_w[1].shape: ", delta_w[1].shape)
-        # exit()
-
-        # print("delta1 shape", delta1.shape)
-        # print("self.weights[1]: ", self.weights[1].T.shape)
         
         
         #For Input Layer
@@ -128,11 +102,7 @@ class MLP(object):
         # print("delta2 shape: ", delta2.shape)
         # X = X.reshape(1, 512)
         delta_w[0] = np.dot(delta2, X.T)
-        # print("X shape: ", X.shape)
-        
-        # print("delta_b[0].shape: ", delta_b[0].shape)
-        # print("delta_w[0].shape: ", delta_w[0].shape)
-        # exit()
+
         return loss, delta_b, delta_w
 
     def evaluate(self, X, y):
@@ -142,16 +112,8 @@ class MLP(object):
         preds = np.array([])
         for x, _y in zip(X, y):
             # postion of maximum value is the predicted label
-            # print("pred: ", np.argmax(p))
-            # print("pred: ", p)
-            # print("y: ", np.argmax(_y))
-            # print("y: ", _y)
-            # print("y: ", np.argmax(_y))
             _, _ , _,output = self.feedforward(np.array([x]).T)
             preds = np.append(preds, np.argmax(output))
-            # print("output: ",  output)
-            # print("output: ",  np.argmax(output))
-            # exit()
             if np.argmax(output) == np.argmax(_y):
                 count += 1
         return float(count) / X.shape[0], preds
@@ -186,17 +148,9 @@ class MLP(object):
                 batch_x = x_train_shuffled[batch_idx:batch_idx+batch_size]
                 batch_y = y_train_shuffled[batch_idx:batch_idx+batch_size]
 
-                # print("Batch_x: ", batch_x.shape)
-                # print("Batch_y: ", batch_y.shape)
-                # losses=0.0
                 #Performing Backpropagation
                 loss, delta_b, delta_w = self.backpropagation(batch_x.T, batch_y)
                 loss = abs(loss)
-                # print("Delta_b_0: ", delta_b[0].shape)
-                # print("Delta_w_0: ", delta_w[0].shape)
-                # print("Delta_b_1: ", delta_b[1].shape)
-                # print("Delta_w_1: ", delta_w[1].shape)
-                # # exit()
                 #Maintaining the original shape according to batch size when input is less than given batch size
                 if delta_b[0].shape[1] < batch_size:
                     # print(delta_b[0].shape)
@@ -208,45 +162,17 @@ class MLP(object):
                     size_left = batch_size - delta_b[1].shape[1]
                     delta_b[1] = np.pad(delta_b[1], ((0,0), (0, size_left)))
 
-                # losses+=loss
-                
-                # print("Del_b_0: ", del_b[0].shape)
-                # print("Del_b_1: ", del_b[1].shape)
-                # print("Del_w_0: ", del_w[0].shape)
-                # print("Del_w_1: ", del_w[1].shape)
-                if flag==0:
-                    del_b = [delta_b[0], delta_b[1]]
-                    del_w = [delta_w[0], delta_w[1]]
-                    flag=1
-                else:
-                    #It will encounter only when there's minimum loss is getting as compared to previous batches
-                    if loss < loss_min:
-                        loss_min=loss
-                        for i, (db, dw)in enumerate(zip(delta_b, delta_w)):
-                            # print("db.shape: ", db.shape)
-                            # print("dw.shape: ", dw.shape)
-                            # print(del_b[i])
-                            del_b[i] += db
-                            del_w[i] += dw
-                # del_b = [db + ddb for db, ddb in zip(del_b, delta_b)]
-                # del_w = [dw + ddw for dw, ddw in zip(del_w, delta_w)]
-            
-            # print("Del_b_0: ", del_b[0].shape)
-            # print("Del_w_0: ", del_w[0].shape)
-            # print("Del_b_1: ", del_b[1].shape)
-            # print("Del_w_1: ", del_w[1].shape)
+                #     #It will encounter only when there's minimum loss is getting as compared to previous batches
+                if loss < loss_min:
+                    loss_min=loss
+                    del_b = [db + ddb for db, ddb in zip(del_b, delta_b)]
+                    del_w = [dw + ddw for dw, ddw in zip(del_w, delta_w)]
 
             self.weights = [w - (learning_rate/batch_size)*dw for w, dw in zip(self.weights, del_w)]
             self.biases = [b - (learning_rate/batch_size)*db for b, db in zip(self.biases, del_b)]
 
             model_weights['weights'] = self.weights
             model_weights['biases'] = self.biases
-
-            # print("Weights shape1: ", self.weights[0].shape)
-            # print("Weights shape2: ", self.weights[1].shape)
-
-            # print("Bias shape1: ", self.biases[0].shape)
-            # print("Bias shape2: ", self.biases[1].shape)
 
             # Evaluate performance
             train_acc, _ = self.evaluate(X, y)
@@ -255,7 +181,7 @@ class MLP(object):
             history_training_acc.append(train_acc)
             history_test_acc.append(test_acc)
             history_test_pred.append(test_pred)
-            print("Epoch: %d Training loss: %.3f Training accuracy: %.2f" %(epoch, loss_min, train_acc*100))
+            print("Epoch: %d Training loss: %.3f Training accuracy: %.2f Testing Accuracy: %.2f" %(epoch, loss_min, train_acc*100, test_acc*100))
         return np.array(history_training_acc), np.array(history_training_loss), np.array(history_test_acc), np.array(history_test_pred), model_weights
 
 def Model(X_train, y_train, X_test, y_test, model_wt_folder, out_folder, isModelWeightsAvailable=0, epochs=500, batch_size=32, learning_rate=0.01, augmented=False):
@@ -271,8 +197,9 @@ def Model(X_train, y_train, X_test, y_test, model_wt_folder, out_folder, isModel
     print("learning_rate: ", learning_rate)
     if isModelWeightsAvailable:
         print("Performance measure on test datasets")
-        model = MLP((inp_feats, num_hidden, num_output), model_wt_folder)
+        model = MLP((inp_feats, num_hidden, num_output), model_wt_folder, augmented)
         acc, prediction = model.evaluate(X_test, y_test)
+        print("Testing Accuracy or Performance Measure in percent: %.2f" %(acc*100))
     else:
         model = MLP((inp_feats, num_hidden, num_output), '', augmented)
         total_training_acc, total_training_loss, total_testing_acc, total_test_pred , model_weights= model.train(X_train, y_train, X_test, y_test, epochs=epochs, batch_size=batch_size, learning_rate=learning_rate)
@@ -288,7 +215,7 @@ def Model(X_train, y_train, X_test, y_test, model_wt_folder, out_folder, isModel
         plt.figure(figsize= (8,8))
         plt.plot(np.arange(epochs), total_training_acc, label='Total_trainig_acc')
         plt.plot(np.arange(epochs), total_training_loss, label='Total_training_loss')
-        # plt.plot(np.arange(epochs), total_testing_acc, label='Total_training_acc')
+        plt.plot(np.arange(epochs), total_testing_acc, label='Total_testing_acc')
         plt.xlabel("Epochs")
         plt.ylabel("Training Accuracy and Loss")
         plt.title("Loss/Accuracy vs Epochs - "+"batch_size-"+str(batch_size)+"-learning-rate-"+str(learning_rate))
@@ -297,10 +224,10 @@ def Model(X_train, y_train, X_test, y_test, model_wt_folder, out_folder, isModel
             plt.savefig(out_folder+"/augmented/augmented-loss-accuracy-graph-"+str(batch_size)+"-"+str(learning_rate)+".jpg")
         else: plt.savefig(out_folder+"/unaugmented-loss-accuracy-graph-"+str(batch_size)+"-"+str(learning_rate)+".jpg")
             
-    Y_test = y_test.argmax(axis=1)
-    print('Accuracy: %.3f' % (accuracy_score(Y_test, prediction)*100))
-    print('Precision: %.3f' % precision_score(Y_test, prediction, average='weighted'))
-    print('Recall: %.3f'% recall_score(Y_test, prediction, average='weighted'))
-    print('F1 score: %.3f'% f1_score(Y_test, prediction, average='weighted'))
-    print('confussion matrix:\n',confusion_matrix(Y_test, prediction))
+    # Y_test = y_test.argmax(axis=1)
+    # print('Accuracy: %.3f' % (accuracy_score(Y_test, prediction)*100))
+    # print('Precision: %.3f' % precision_score(Y_test, prediction, average='weighted'))
+    # print('Recall: %.3f'% recall_score(Y_test, prediction, average='weighted'))
+    # print('F1 score: %.3f'% f1_score(Y_test, prediction, average='weighted'))
+    # print('confussion matrix:\n',confusion_matrix(Y_test, prediction))
     return model

@@ -46,11 +46,6 @@ def unpickle(datapaths):
 			test_data['labels'] = test_data['labels']+dict[b'labels']
 	return train_data, test_data, labels_mapping
 
-# train_data, test_data, labels_mapping = unpickle("./cifar-10-batches-py")
-
-# print("Total train data size:",  train_data['data'].shape)
-# print("Total test data size:",  test_data['data'].shape)
-# print("Labels Mapping: ", labels_mapping)
 
 def preprocessing(data):
 	images=[]
@@ -60,15 +55,6 @@ def preprocessing(data):
 		images.append(image)
 	return np.array(images)
 
-# org_train_images = preprocessing(train_data)
-# org_test_images = preprocessing(test_data)
-# print(org_test_images.shape)
-
-# plt.figure(figsize= (10,10))
-# for i in range(112):
-#   plt.subplot(16,16,i+1)
-#   plt.axis('off')
-#   plt.imshow(org_train_images[i])
 
 """## Question 2"""
 
@@ -173,42 +159,6 @@ def contrast_and_flip(image):
 		img = img[:, ::-1, :] #Horizontal Flipping
 	return img, round(alpha, 3)
 
-# image=org_train_images[random.randint(0, org_train_images.shape[0])]
-# rotated_image, degree = random_rotation(image)
-# cutout_image, size = random_cutout(image)
-# cropped_image, _ = random_crop(image)
-# contrast_image, alpha = contrast_and_flip(image)
-
-# fig = plt.figure(figsize = (6, 6))
-
-# plt.subplot(2, 2, 1)
-# plt.axis('off')
-# plt.title("Rotated Image with degree: "+ str(degree))
-# plt.imshow(rotated_image)
-# # plt.savefig("./output/rotated_image.jpg")
-
-# plt.subplot(2, 2, 2)
-# plt.axis('off')
-# plt.title("Cutout with size: "+str(size)+"X"+str(size))
-# plt.imshow(cutout_image)
-# # plt.savefig("./output/cutout_image.jpg")
-
-# plt.subplot(2, 2, 3)
-# plt.axis('off')
-# plt.title("Cropped Image")
-# plt.imshow(cropped_image)
-# # plt.savefig("./output/cropped_image.jpg")
-
-# plt.subplot(2, 2, 4)
-# plt.axis('off')
-# plt.title("Contrast and flipped \n Image with prob. 0.5 \n and alpha: "+str(alpha))
-# plt.imshow(contrast_image)
-
-# fig.tight_layout()
-
-# plt.show()
-# plt.savefig("./output/augmented_images.jpg")
-
 """## Question 3"""
 
 ##Generating Augmented Images
@@ -238,41 +188,6 @@ def get_augmented_images(data, labels):
 		i+=1
 	return np.array(augmented_img), augmented_labels
 
-# train_augmented_img, train_augmented_labels = get_augmented_images(org_train_images, train_data['labels'])
-# test_augmented_img, test_augmented_labels = get_augmented_images(org_test_images, test_data['labels'])
-
-# plt.figure(figsize= (10,10))
-# for i in range(150):
-#   plt.subplot(16,16,i+1)
-#   plt.axis('off')
-#   plt.imshow(train_augmented_img[i])
-
-# plt.savefig("./output/train_augmented_image.jpg")
-# plt.close()
-
-# train_augmented_img = np.vstack([org_train_images, train_augmented_img])
-# test_augmented_img = np.vstack([org_test_images, test_augmented_img])
-# print("Augmented Train Images: ", train_augmented_img.shape)
-# print("Augmented Test Images: ", test_augmented_img.shape)
-
-# augmented_train_labels = train_data['labels'] + train_augmented_labels
-# augmented_test_labels = test_data['labels'] + test_augmented_labels
-# print("Augmented Train Labels: ", np.array(augmented_train_labels).shape)
-# print("Augmented Test Labels: ", np.array(augmented_test_labels).shape)
-
-# """## Question 4"""
-
-# def resize_224_x_224(images):
-
-# 	final_img=[]
-# 	for i in range(images.shape[0]):
-# 		final_img.append(cv2.resize(images[i], (224, 224)))
-# 	final_img=np.array(final_img, dtype=np.float32)
-
-# 	final_img = np.transpose(final_img, (0, 3, 2, 1))
-# 	#final_img = final_img.astype(dtype=np.float32)
-# 	return final_img
-
 def get_feat_vec(images, obj):
 	feat_vec=[]
 	for img in images:
@@ -283,43 +198,3 @@ def get_feat_vec(images, obj):
 		img=np.array(img, dtype=np.float32)
 		feat_vec.append(obj.feature_extraction(np.array([img]))[0])
 	return np.array(feat_vec)
-
-
-# obj = BBResNet18()
-# print("Getting Augmented Training Feature Vector")
-# augmented_train_feat_vec=get_feat_vec(train_augmented_img, obj)
-# print("Getting Augmented Testing Feature Vector")
-# augmented_test_feat_vec=get_feat_vec(test_augmented_img, obj)
-# np.save('augmented_train_feat_vec.npy', augmented_train_feat_vec)
-# np.save('augmented_test_feat_vec.npy', augmented_test_feat_vec)
-# print("Augmented Training Image Vector shape: ", augmented_train_feat_vec.shape)
-# print("Augmented Test Image Vector shape: ", augmented_test_feat_vec.shape)
-
-# print("Getting Unaugmented Training Feature Vector")
-# original_train_feat_vec= np.load('original_train_feat_vec.npy')  #get_feat_vec(org_train_images, obj)
-# print("Getting Unaugmented Testing Feature Vector")
-# original_test_feat_vec=  np.load('original_test_feat_vec.npy') #get_feat_vec(org_test_images, obj)
-# # np.save('original_train_feat_vec.npy', original_train_feat_vec)
-# # np.save('original_test_feat_vec.npy', original_test_feat_vec)
-# print("Original Training Image Vector shape: ", original_train_feat_vec.shape)
-# print("Original Test Image Vector shape: ", original_test_feat_vec.shape)
-
-
-# """## Question 5 & 6"""
-# labels=np.arange(10)
-# print("Training on Unaugmented Datasets")
-# # print("original_train_feat_vec[:100]: ", original_train_feat_vec[:1000])
-# train_labels = get_one_hot_vector(train_data['labels'])
-# test_labels = get_one_hot_vector(test_data['labels'])
-# unaugmented_model = Model(original_train_feat_vec, train_labels, original_test_feat_vec, test_labels, augmented=False)
-# acc = unaugmented_model.evaluate(original_test_feat_vec, test_labels)
-# print("Testing Accuracy or Performance on Unaugmented Datasets: %.2f" %(acc*100))
-# print("*"*100)
-
-# """## Question 7"""
-# print("Training on Augmented Datasets")
-# augmented_train_labels = get_one_hot_vector(augmented_train_labels)
-# augmented_test_labels = get_one_hot_vector(augmented_test_labels)
-# augmented_model = Model(augmented_train_feat_vec, augmented_train_labels, augmented_test_feat_vec, augmented_test_labels, augmented=True)
-# acc = augmented_model.evaluate(augmented_test_feat_vec, augmented_test_labels)
-# print("Testing Accuracy or Performance on Augmented Datasets: %.2f" %(acc*100))
