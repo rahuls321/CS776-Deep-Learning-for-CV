@@ -1,5 +1,7 @@
 Assignment 1
 
+## Build Neural Network From Scratch on CIFAR-10 Datasets
+
 Following are the package dependencies with their versions 
 
 Packages dependencies
